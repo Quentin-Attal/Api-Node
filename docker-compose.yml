@@ -4,12 +4,11 @@ services:
     build:
       context: ./
       dockerfile: ./Docker/node/Dockerfile
-    command: npm start
     ports:
       - "3000:3000"
     volumes:
-      - .:/user/src/app
-      - /usr/src/app/node_modules
+      - ./api/:/usr/src/app
+      - /usr/src/app/node_modules # Remove this if you have pure JS dependencies
     depends_on:
       - db
   db:
