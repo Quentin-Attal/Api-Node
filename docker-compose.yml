@@ -8,10 +8,16 @@ services:
       - "3000:3000"
     volumes:
       - ./api/:/usr/src/app
-      - /usr/src/app/node_modules # Remove this if you have pure JS dependencies
     depends_on:
       - db
+    networks:
+      - default
   db:
     build: ./Docker/postgre
     ports:
       - "5432:5432"
+    networks:
+      - default
+
+networks:
+  default:

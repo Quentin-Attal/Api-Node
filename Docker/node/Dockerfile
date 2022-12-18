@@ -1,11 +1,11 @@
 FROM node:latest
 
 # Set environment variables
-ENV DB_HOST=localhost
-ENV DB_POSR=5432
-ENV DB_USER=postgre
-ENV DB_PASSWORD=root
-ENV DB_NAME=node_api
+ENV DB_HOST=db
+ENV DB_PORT=5432
+ENV DB_USER=docker
+ENV DB_PASSWORD=docker
+ENV DB_NAME=nodeapi
 
 # Create app directory
 RUN mkdir -p /usr/src/app

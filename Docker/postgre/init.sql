@@ -8,3 +8,5 @@ CREATE TABLE users (
 INSERT INTO users (name, email, password)
 VALUES ('John Doe', 'john@example.com', 'test'),
        ('Jane Doe', 'jane@example.com', 'test');
+
+GRANT ALL PRIVILEGES ON DATABASE nodeapi TO docker;

@@ -1,10 +1,9 @@
 FROM postgres:latest
 
 # set the default postgre user password
-ENV POSTGRES_PASSWORD=root
-
-# Set the default database to be created when the image is forst started
-ENV POSTGRE_DB=node_api
+ENV POSTGRES_USER docker
+ENV POSTGRES_PASSWORD docker
+ENV POSTGRES_DB nodeapi
 
 # Expose the default PostgreSQL port
 EXPOSE 5432

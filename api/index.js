@@ -4,14 +4,14 @@ const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-// const db = require('./config/database')
-// db.connect((err) => {
-//     if (err) {
-//         console.error('Failed to connext to the database:', err.stack);
-//         process.exit(1);
-//     }
-//     console.log('Successfully donnected to the database.')
-// })
+const db = require('./config/database')
+db.connect((err) => {
+    if (err) {
+        console.error('Failed to connext to the database:', err.stack);
+        process.exit(1);
+    }
+    console.log('Successfully connected to the database.')
+})
 
 app.get("/", (req, res) => {
     res.send("<h1>Welcome to EJSs world!</h1>");
