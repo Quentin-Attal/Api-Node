@@ -70,13 +70,13 @@ app.post('/pokemon', async (req, res) => {
     }
     if (check) {
         const { id, name, type_1, type_2, total, hp, attack, defense, spatk, spdef, speed, generation, legendary } = req.body
-        return db.query('INSERT INTO pokemons VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) ON CONFLICT DO NOTHING RETURNING *',
+        db.query('INSERT INTO pokemons VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) ON CONFLICT DO NOTHING RETURNING *',
             [id, name, type_1, type_2, total, hp, attack, defense, spatk, spdef, speed, generation, legendary])
             .then(result => {
                 if (result.rows.length === 0) {
                     res.status(400).json({ result: "error", error: "id already exist" })
                 } else {
-                    res.status(200).json({ result: "success", insert: result.rows })
+                    res.status(201).json({ result: "success", insert: result.rows })
                 }
             })
             .catch(result => {
@@ -88,13 +88,90 @@ app.post('/pokemon', async (req, res) => {
 })
 
 app.put('/pokemon', (req, res) => {
-    const pokemons = require('./pokemon.json')
-    res.json({ requestBody: req.body });
-    // pokemons.push(req.body);
-    // res.status(201).json({ result: "sucess" })
+    const { id, name, type_1, type_2, total, hp, attack, defense, spatk, spdef, speed, generation, legendary } = req.body
+    let request = "";
+    let params = []
+    let index = 1;
+    if (!!id) {
+        //check each variable and update variable
+        if (name) {
+            request += `name = $${index++}`;
+            params.push(name);
+        }
+        if (type_1) {
+            request += `type_1 = $${index++}`;
+            params.push(type_1);
+        }
+        if (type_2) {
+            request += `type_2 = $${index++}`;
+            params.push(type_2);
+        }
+        if (total) {
+            request += `total = $${index++}`;
+            params.push(total);
+        }
+        if (hp) {
+            request += `hp = $${index++}`;
+            params.push(hp);
+        }
+        if (attack) {
+            request += `attack = $${index++}`;
+            params.push(attack);
+        }
+        if (defense) {
+            request += `defense = $${index++}`;
+            params.push(defense);
+        }
+        if (spatk) {
+            request += `spatk = $${index++}`;
+            params.push(spatk);
+        }
+        if (spdef) {
+            request += `spdef = $${index++}`;
+            params.push(spdef);
+        }
+        if (speed) {
+            request += `speed = $${index++}`;
+            params.push(speed);
+        }
+        if (generation) {
+            request += `generation = $${index++}`;
+            params.push(generation);
+        }
+        if (legendary) {
+            request += `legendary = $${index++}`;
+            params.push(legendary);
+        }
+        if (index === 1) {
+            // si on a aucune var
+            res.status(400).json({ error: "not valid object send" })
+        } else {
+            // on retire la virgule final
+            request = request.slice(0, -1);
+            params.push(id);
+            // on fais la requete
+            db.query(`UPDATE pokemons set ${request} WHERE id = $${index} RETURNING *`, params)
+                .then(result => {
+                    if (result.rows.length === 0) {
+                        // on update rien
+                        res.status(400).json({ result: "error", error: "id not exist" })
+                    } else {
+                        // on a reussi a update
+                        res.status(201).json({ result: "success", insert: result.rows })
+                    }
+                })
+                .catch(result => {
+                    console.log(result)
+                    res.status(400).json({ result: "error" })
+                })
+        }
+    } else {
+        // l'id n'a pas été remplie
+        res.status(400).json({ error: "not valid object send" })
+    }
 })
 
-
+// open server on server 3000
 app.listen(3000, () => {
     console.log("server started on port 3000");
 });
