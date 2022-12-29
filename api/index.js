@@ -47,12 +47,11 @@ app.get('/pokemon/init', async (req, res) => {
     res.status(200).json(rows);
 });
 
-
 app.get('/pokemon/:id', async (req, res) => {
     const id = req.params.id
     const { rows } = await db.query('SELECT * FROM pokemons where id = $1 limit 1', [id]);
     res.status(200).json(rows)
-})
+});
 
 app.post('/pokemon', async (req, res) => {
     let check = true;
@@ -85,7 +84,7 @@ app.post('/pokemon', async (req, res) => {
     } else {
         res.status(400).json({ error: "not valid object send" })
     }
-})
+});
 
 app.put('/pokemon', (req, res) => {
     const { id, name, type_1, type_2, total, hp, attack, defense, spatk, spdef, speed, generation, legendary } = req.body
@@ -95,51 +94,51 @@ app.put('/pokemon', (req, res) => {
     if (!!id) {
         //check each variable and update variable
         if (name) {
-            request += `name = $${index++}`;
+            request += `name = $${index++},`;
             params.push(name);
         }
         if (type_1) {
-            request += `type_1 = $${index++}`;
+            request += `type_1 = $${index++},`;
             params.push(type_1);
         }
         if (type_2) {
-            request += `type_2 = $${index++}`;
+            request += `type_2 = $${index++},`;
             params.push(type_2);
         }
         if (total) {
-            request += `total = $${index++}`;
+            request += `total = $${index++},`;
             params.push(total);
         }
         if (hp) {
-            request += `hp = $${index++}`;
+            request += `hp = $${index++},`;
             params.push(hp);
         }
         if (attack) {
-            request += `attack = $${index++}`;
+            request += `attack = $${index++},`;
             params.push(attack);
         }
         if (defense) {
-            request += `defense = $${index++}`;
+            request += `defense = $${index++},`;
             params.push(defense);
         }
         if (spatk) {
-            request += `spatk = $${index++}`;
+            request += `spatk = $${index++},`;
             params.push(spatk);
         }
         if (spdef) {
-            request += `spdef = $${index++}`;
+            request += `spdef = $${index++},`;
             params.push(spdef);
         }
         if (speed) {
-            request += `speed = $${index++}`;
+            request += `speed = $${index++},`;
             params.push(speed);
         }
         if (generation) {
-            request += `generation = $${index++}`;
+            request += `generation = $${index++},`;
             params.push(generation);
         }
         if (legendary) {
-            request += `legendary = $${index++}`;
+            request += `legendary = $${index++},`;
             params.push(legendary);
         }
         if (index === 1) {
@@ -169,7 +168,13 @@ app.put('/pokemon', (req, res) => {
         // l'id n'a pas été remplie
         res.status(400).json({ error: "not valid object send" })
     }
-})
+});
+
+// init controller user and generate controler
+const Usercontrollers = require('./controllers/UserController');
+const userController = new Usercontrollers(db);
+app.post('/login', userController.login);
+app.post('/register', userController.register);
 
 // open server on server 3000
 app.listen(3000, () => {

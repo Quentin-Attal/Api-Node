@@ -12,6 +12,14 @@ services:
       - db
     networks:
       - default
+  view:
+    image: node:latest
+    working_dir: /app
+    volumes:
+      - ./front:/app
+    command: bash -c "npm install esbuild && npm run dev"
+    ports:
+      - 8080:8080
   db:
     build: ./Docker/postgre
     ports:
