@@ -1,4 +1,3 @@
-const { Client } = require('pg');
 const jwt = require('jsonwebtoken');
 
 class Auth {
