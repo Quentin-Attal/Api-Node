@@ -24,13 +24,17 @@ class UserController {
     }
 
     async register(req, res) {
-        const { email, password, username } = req.body;
+        const { email, password, password2, username } = req.body;
+        if (password !== password2) {
+            res.status(400).json({ error: 'password not match' });
+            return;
+        }
         try {
             // enregistre l'utilisateur avec le modèle d'utilisateur
             const result = await this.user.register(email, password, username);
             if (result.success) {
                 // l'enregistrement a réussi, on envoie un code de succès et l'ID de l'utilisateur
-                res.status(200).json(result.id);
+                res.status(200).json({ token: result.token });
             } else {
                 // l'enregistrement a échoué, on envoie un code d'erreur
                 res.status(400).json({ error: 'Email already in use' });
