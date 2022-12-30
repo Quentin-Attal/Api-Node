@@ -6,6 +6,7 @@ ENV DB_PORT=5432
 ENV DB_USER=docker
 ENV DB_PASSWORD=docker
 ENV DB_NAME=nodeapi
+ENV JWT_SECRET="An Arm and a Leg"
 
 # Create app directory
 RUN mkdir -p /usr/src/app
