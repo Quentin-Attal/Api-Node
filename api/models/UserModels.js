@@ -8,7 +8,7 @@ class User {
         const bcrypt = require('bcrypt');
 
         // get user with email 
-        const query = `SELECT * FROM users WHERE email = $1`;
+        const query = `SELECT * FROM users WHERE email = $1 limit 1`;
         const values = [email];
         try {
             const { rows } = await this.db.query(query, values);
@@ -20,8 +20,14 @@ class User {
             // compare password store hash with password send
             const correctPassword = await bcrypt.compare(password, storedHash);
             if (correctPassword) {
-                // Return success and user id
-                return { success: true, id: rows[0].id };
+
+                // generation du token et renvoie
+                const Auth = require('../models/AuthModels');
+                const auth = new Auth();
+                const token = auth.generateToken(rows[0])
+
+                // Return success and user token
+                return { success: true, token: token };
             } else {
                 // the password is incorrect
                 return { success: false };
@@ -45,13 +51,17 @@ class User {
                 const saltRounds = 10;
                 // generate password hash
                 const passwordHash = await bcrypt.hash(password, saltRounds);
-                const query = 'INSERT INTO users (email, password, username) VALUES ($1, $2, $3) RETURNING id';
+                const query = 'INSERT INTO users (email, password, username) VALUES ($1, $2, $3) RETURNING id, username, email';
                 const values = [email, passwordHash, username];
                 const { rows } = await this.db.query(query, values);
-                const id = rows[0].id;
+
+                // generation du token et renvoie
+                const Auth = require('../models/AuthModels');
+                const auth = new Auth();
+                const token = auth.generateToken(rows[0])
 
                 // Return success and user id
-                return { success: true, id: id };
+                return { success: true, token: token };
             } else {
                 // email already used
                 return { success: false }
