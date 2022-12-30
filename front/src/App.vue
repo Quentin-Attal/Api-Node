@@ -12,6 +12,7 @@ const auth = authStore();
     <nav class="nav">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/pokemons">Pokemons</RouterLink>
       <div v-if="!auth.status.loggedIn">
         <RouterLink to="/login">Login</RouterLink>
       </div>

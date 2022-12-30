@@ -4,8 +4,15 @@ import authHeader from './auth-header';
 const API_URL = 'http://localhost:3000/';
 
 class PokemonsService {
-    getPublicContent() {
-        return axios.get(API_URL + 'pokemons');
+    getPublicContent(offset?: string, limit?: string) {
+        let params = ""
+        if (offset) {
+            params += `?offset=${offset}`
+            if (limit) {
+                params += `&limit=${limit}`
+            }
+        }
+        return axios.get(API_URL + `pokemons` + params);
     }
 
     getPokemonWithId(pokemonId: number) {

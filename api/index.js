@@ -22,7 +22,8 @@ app.get("/", (req, res) => {
 
 app.get("/pokemons", async (req, res) => {
     let offset = req.query.offset ?? 0;
-    const { rows } = await db.query('SELECT * FROM pokemons limit 20 OFFSET $1', [offset]);
+    let limit = req.query.limit ?? 20;
+    const { rows } = await db.query('SELECT id, name FROM pokemons limit $1 OFFSET $2', [limit, offset]);
     res.status(200).json(rows)
 });
 
@@ -30,7 +31,7 @@ app.get('/pokemon/init', async (req, res) => {
     const fs = require('fs');
     await db.query(`DROP TABLE IF EXISTS pokemons;`);
     await db.query(`CREATE TABLE IF NOT EXISTS "pokemons" (
-        "id" VARCHAR(6) PRIMARY KEY,
+        "id" VARCHAR(30) PRIMARY KEY,
         "name" VARCHAR(255) NOT NULL,
         "type_1" VARCHAR(255) NOT NULL,
         "type_2" VARCHAR(255),
