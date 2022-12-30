@@ -37,7 +37,7 @@ export const authStore = defineStore({
             return AuthService.register(user).then(
                 response => {
                     this.token = response.token
-                    this.status.loggedIn = false;
+                    this.status.loggedIn = true;
                     return Promise.resolve(response.token);
                 },
                 error => {

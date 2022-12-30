@@ -49,7 +49,7 @@ class User {
                 const saltRounds = 10;
                 // generate password hash
                 const passwordHash = await bcrypt.hash(password, saltRounds);
-                const query = 'INSERT INTO users (email, password, username) VALUES ($1, $2, $3) RETURNING id, username, email';
+                const query = 'INSERT INTO users (email, password, name) VALUES ($1, $2, $3) RETURNING id, name, email';
                 const values = [email, passwordHash, username];
                 const { rows } = await this.db.query(query, values);
 

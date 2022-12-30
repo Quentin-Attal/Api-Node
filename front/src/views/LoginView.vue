@@ -19,12 +19,6 @@
                         <span class="text-white">Login</span>
                     </button>
                 </div>
-
-                <div class="form-group ">
-                    <div v-if="message" class="alert alert-danger" role="alert">
-                        {{ message }}
-                    </div>
-                </div>
             </Form>
 
         </div>
@@ -55,13 +49,13 @@ const login = (values: any) => {
     const password = values.password;
     auth.login({ email, password })
         .then(() => {
-            router.push("/profile");
+            router.push("/pokemons");
         });
 }
 
 onMounted(() => {
     if (auth.status.loggedIn) {
-        router.push("/profile");
+        router.push("/pokemons");
     }
 })
 </script>

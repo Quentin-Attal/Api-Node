@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { authStore } from '@/store/auth';
+
+const auth = authStore();
+
 </script>
 
 <template>
@@ -8,7 +12,17 @@ import { RouterLink, RouterView } from 'vue-router'
     <nav class="nav">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/about">About</RouterLink>
-      <RouterLink to="/login">Login</RouterLink>
+      <div v-if="!auth.status.loggedIn">
+        <RouterLink to="/login">Login</RouterLink>
+      </div>
+      <div v-if="!auth.status.loggedIn">
+        <RouterLink to="/register">Register</RouterLink>
+      </div>
+      <div v-else>
+        <button @click="auth.logout">
+          logout
+        </button>
+      </div>
     </nav>
   </header>
 
