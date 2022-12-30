@@ -1,12 +1,12 @@
+// init bcrypt
+const bcrypt = require('bcrypt');
+
 class User {
     constructor(db) {
         this.db = db;
     }
 
     async login(email, password) {
-        // init bcrypt
-        const bcrypt = require('bcrypt');
-
         // get user with email 
         const query = `SELECT * FROM users WHERE email = $1 limit 1`;
         const values = [email];
@@ -20,7 +20,6 @@ class User {
             // compare password store hash with password send
             const correctPassword = await bcrypt.compare(password, storedHash);
             if (correctPassword) {
-
                 // generation du token et renvoie
                 const Auth = require('../models/AuthModels');
                 const auth = new Auth();
@@ -29,6 +28,7 @@ class User {
                 // Return success and user token
                 return { success: true, token: token };
             } else {
+
                 // the password is incorrect
                 return { success: false };
             }
@@ -39,8 +39,6 @@ class User {
     }
 
     async register(email, password, username) {
-        // init bcrypt
-        const bcrypt = require('bcrypt');
 
         // check if email is already exist
         const query = `SELECT * FROM users WHERE email = $1`;

@@ -6,7 +6,7 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (name, email, password)
-VALUES ('John Doe', 'john@example.com', 'test'),
-       ('Jane Doe', 'jane@example.com', 'test');
+VALUES ('John Doe', 'john@example.com', '$2a$10$Q1c4R7G/rijEQ4MFiSI/repjfvsk/tvpFph6hg1VDQSVAFht3Q.nS'),
+       ('Jane Doe', 'jane@example.com', '$2a$10$Q1c4R7G/rijEQ4MFiSI/repjfvsk/tvpFph6hg1VDQSVAFht3Q.nS');
 
 GRANT ALL PRIVILEGES ON DATABASE nodeapi TO docker;

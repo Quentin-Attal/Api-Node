@@ -2,15 +2,15 @@
 
 import HelloWorld from '@/components/HelloWorld.vue';
 
-let numbLogin = parseInt(localStorage.getItem("numbLogin") ?? "0");
+let numbOpen = parseInt(localStorage.getItem("numbOpen") ?? "0");
 
-localStorage.setItem('numbLogin', (++numbLogin).toString())
+localStorage.setItem('numbOpen', (++numbOpen).toString())
 
 
 </script>
 
 <template>
   <main>
-    <HelloWorld />
+    <HelloWorld :msg="numbOpen" />
   </main>
 </template>

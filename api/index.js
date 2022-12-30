@@ -2,7 +2,10 @@ const express = require('express');
 const app = express();
 
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
 app.use(bodyParser.json());
+app.use(cors())
 
 const db = require('./config/database');
 db.connect((err) => {
@@ -171,10 +174,17 @@ app.put('/pokemon', (req, res) => {
 });
 
 // init controller user and generate controler
-const Usercontrollers = require('./controllers/UserController');
-const userController = new Usercontrollers(db);
-app.post('/login', userController.login);
-app.post('/register', userController.register);
+
+app.post('/login', (req, res) => {
+    const Usercontrollers = require('./controllers/UserController');
+    const userController = new Usercontrollers(db);
+    userController.login(req, res)
+});
+app.post('/register', (req, res) => {
+    const Usercontrollers = require('./controllers/UserController');
+    const userController = new Usercontrollers(db);
+    userController.register(req, res)
+});
 
 // open server on server 3000
 app.listen(3000, () => {

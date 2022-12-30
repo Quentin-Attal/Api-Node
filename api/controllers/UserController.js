@@ -12,7 +12,7 @@ class UserController {
             const result = await this.user.login(email, password);
             if (result.success) {
                 // le login a réussi, on envoie un code de succès et l'utilisateur
-                res.status(200).json(result.user);
+                res.status(200).json({ token: result.token });
             } else {
                 // le login a échoué, on envoie un code d'erreur
                 res.status(401).json({ error: 'Invalid email or password' });
