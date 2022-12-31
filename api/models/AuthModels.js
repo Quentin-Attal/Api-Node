@@ -6,8 +6,8 @@ class Auth {
     generateToken(user) {
         // Définition des données à inclure dans le token
         const payload = {
-            userId: user._id,
-            name: user.username,
+            userId: user.id,
+            name: user.name,
             email: user.email
         };
 

@@ -53,6 +53,16 @@ app.get('/pokemon/init', async (req, res) => {
 });
 
 app.get('/pokemon/:id', async (req, res) => {
+    const token = req.headers?.['x-access-token']
+    if (!token) {
+        return res.status(401).end();
+    }
+    const Auth = require('./models/AuthModels');
+    const auth = new Auth();
+    const decoded = auth.checkToken(token)
+    if (!decoded.userId) {
+        return res.status(401).end();
+    }
     const id = req.params.id
     const { rows } = await db.query('SELECT * FROM pokemons where id = $1 limit 1', [id]);
     res.status(200).json(rows)

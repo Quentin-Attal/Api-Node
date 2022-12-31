@@ -15,7 +15,7 @@ class PokemonsService {
         return axios.get(API_URL + `pokemons` + params);
     }
 
-    getPokemonWithId(pokemonId: number) {
+    getPokemonWithId(pokemonId: string) {
         const header = authHeader();
         return axios.get(API_URL + 'pokemon/' + pokemonId, { headers: header });
     }
