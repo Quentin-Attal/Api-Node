@@ -24,7 +24,8 @@ app.get("/pokemons", async (req, res) => {
     let offset = req.query.offset ?? 0;
     let limit = req.query.limit ?? 20;
     const { rows } = await db.query('SELECT id, name FROM pokemons limit $1 OFFSET $2', [limit, offset]);
-    res.status(200).json(rows)
+    const count = await db.query('SELECT count(id) FROM pokemons');
+    res.status(200).json({ pokemons: rows, total: count.rows[0].count, perPage: limit })
 });
 
 app.get('/pokemon/init', async (req, res) => {
