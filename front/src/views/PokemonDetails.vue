@@ -48,7 +48,7 @@ const width = (stats: number) => {
     return "width:" + stats / 260 * 100 + "%"
 }
 
-const classColor = (stats: number) => {
+const classColorStats = (stats: number) => {
     if (stats <= 50) {
         return "red"
     } else if (stats <= 100) {
@@ -65,42 +65,30 @@ const classColor = (stats: number) => {
 </script>
 
 <template>
-    <div class="row">
-        <div class="d-flex align-items-center flex-column text-center">
-            <img :src="imageUrl" height="96" width="96" class="w-25" style="aspect-ratio: 1; height: auto;" />
-            <p class="fs-3 text-white">{{ pokemon.name }}</p>
+    <div class="d-flex align-items-center flex-column text-center">
+        <img :src="imageUrl" height="96" width="96" class="w-25" style="aspect-ratio: 1; height: auto;" />
+        <p class="fs-3 text-white">{{ pokemon.name }}</p>
+    </div>
+    <div v-if="!!pokemon.hp" class="row">
+        <div class="col-5">
+            <h3>Type</h3>
+            <span class="px-3 py-1 text-light rounded fs-6" :class="pokemon.type_1.toLowerCase()">
+                {{ pokemon.type_1 }}
+            </span>
+            <span class="px-3 py-1 mx-3 text-light rounded fs-6" :class="pokemon.type_2.toLowerCase()"
+                v-if="!!pokemon.type_2">
+                {{ pokemon.type_2 }}
+            </span>
         </div>
-        <div v-if="!!pokemon.hp">
+        <div class="col-5">
             <h3>Statistique</h3>
-            <div class="d-flex col-5 align-items-baseline" v-for="stat in stats">
+            <div class="d-flex align-items-baseline" v-for="stat in stats">
                 {{ stat }} {{ pokemon[stat] }}
                 <div class="w-50 mx-3 progress bg-transparent">
-                    <div class="progress-bar rounded-2" :class="classColor(pokemon[stat])" role="progressbar"
+                    <div class="progress-bar rounded-2" :class="classColorStats(pokemon[stat])" role="progressbar"
                         :style="width(pokemon[stat])" aria-valuemin="0" aria-valuemax="260" aria-valuenow="125"></div>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
-<style>
-.red {
-    background-color: #db2828 !important;
-}
-
-.yellow {
-    background-color: #fbbd08 !important;
-}
-
-.olive {
-    background-color: #b5cc18 !important;
-}
-
-.green {
-    background-color: #21ba45 !important;
-}
-
-.blue {
-    background-color: #4571e6 !important;
-}
-</style>

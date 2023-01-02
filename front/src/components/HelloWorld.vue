@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
     <div class="greetings">
-        <h1 class="green">nombre de connexion: {{ msg }}</h1>
+        <h1 class="greenTitle">nombre de connexion: {{ msg }}</h1>
     </div>
 </template>
 

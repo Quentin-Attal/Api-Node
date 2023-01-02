@@ -10,10 +10,106 @@
 }
 
 a,
-.green {
+.greenTitle {
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1);
   transition: 0.4s;
+}
+
+.red {
+  background-color: #db2828 !important;
+}
+
+.yellow {
+  background-color: #fbbd08 !important;
+}
+
+.olive {
+  background-color: #b5cc18 !important;
+}
+
+.green {
+  background-color: #21ba45 !important;
+}
+
+.blue {
+  background-color: #4571e6 !important;
+}
+
+.grass {
+  background-color: #5fac38;
+}
+
+.electrik {
+  background-color: #f1c30d;
+}
+
+.poison {
+  background-color: #993d99;
+}
+
+.ice {
+  background-color: #84d0d0;
+}
+
+.water {
+  background-color: #3f71eb;
+}
+
+.ground {
+  background-color: #d5aa35;
+}
+
+.flying {
+  background-color: #a38de8;
+}
+
+.fire {
+  background-color: #de6812;
+}
+
+.bug {
+  background-color: #9cab1d;
+}
+
+.rock {
+  background-color: #96822d;
+}
+
+.steel {
+  background-color: #7e7e91;
+}
+
+.dragon {
+  background-color: #4c09ef;
+}
+
+.fighting {
+  background-color: #b92e26;
+}
+
+.ice {
+  background-color: #79cccc;
+}
+
+.normal {
+  background-color: #a1a171;
+}
+
+.dark {
+  background-color: #564337;
+}
+
+.ghost {
+  background-color: #68528e;
+}
+
+.fairy {
+  background-color: #f879ff;
+}
+
+.psychic {
+  background-color: #f7497d;
 }
 
 @media (hover: hover) {
